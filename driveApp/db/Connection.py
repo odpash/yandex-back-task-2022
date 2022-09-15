@@ -1,6 +1,6 @@
 import asyncpg
 from driveApp.secrets import POSTGRES_CONNECTION_SECRETS
-from driveApp.db.schemas import DATABASE_CREATE_SQL
+
 
 class Connection:
     def __init__(self, executable_string):
@@ -15,7 +15,6 @@ class Connection:
         self.__executable_string = s
 
     async def __connect(self):
-        print(self.__user, self.__password, self.__database, self.__host)
         try:
             self.__conn = await asyncpg.connect(user=self.__user, password=self.__password, database=self.__database, host=self.__host)
         except asyncpg.InvalidCatalogNameError:
@@ -25,7 +24,6 @@ class Connection:
         await self.__conn.close()
 
     async def execute_command(self):
-        print(self.__executable_string)
         await self.__connect()
         await self.__conn.execute(self.__executable_string)
         await self.__close_connection()

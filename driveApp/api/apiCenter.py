@@ -12,7 +12,7 @@ def start_handlers():
     app.register_blueprint(nodes_cmd.blueprint)
     app.register_blueprint(updates_cmd.blueprint)
     app.register_blueprint(node_cmd.blueprint)
-    app.run(debug=True)
+    app.run()
 
 
 app = Flask(__name__)

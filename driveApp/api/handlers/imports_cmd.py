@@ -8,7 +8,6 @@ from driveApp.db.schemas import GET_ID_AND_PARENT_SQL
 async def get_information_from_db():
     connection = Connection(GET_ID_AND_PARENT_SQL)
     data = await connection.select_all_command()
-    print(data, "DATA")
     return data
 
 blueprint = Blueprint('imports_bl', __name__)

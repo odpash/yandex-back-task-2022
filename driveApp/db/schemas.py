@@ -22,7 +22,7 @@ size integer,
 
 
 # Import handler Sql's
-GET_ID_AND_PARENT_SQL = f"""SELECT (id, parentid) FROM SystemItem"""
+GET_ID_AND_PARENT_SQL = f"""SELECT (id, parentid, type) FROM SystemItem"""
 UPDATE_BY_IDS_SQL = f"""update systemitem as t set -- postgres FTW
   url = n.url,
   parentId = n.parentId,

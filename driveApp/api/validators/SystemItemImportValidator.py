@@ -52,7 +52,16 @@ class SystemItemImportValidator:
         return True, {}
 
     async def __validateParentId(self) -> (bool, dict):
-        return True, {}  # TODO: родителем элемента может быть только папка, принадле   жность к папке определяется полем parentId, элементы могут не иметь родителя (при обновлении parentId на null элемент остается без родителя)
+        has_father = False
+        for element in self.__database_info:
+            if element[0] == self.__d['parentId'] and element[2] == 'FILE':
+                return False, {"code": 400, "message": f"Validation Failed!\nThe parent can only be a folder (belonging to the parentId field of the folder decision)\nElement: {self.__d}"}
+            if element[0] == self.__d['parentId']:
+                has_father = True
+
+        if not has_father and self.__d['parentId'] is not None:
+            return False,  {'code': 400, 'message': f'Validation Failed!\nObject has no father in struct\nElement: {self.__d}'}
+        return True, {}
 
     async def __validateSize(self) -> (bool, dict):
         if self.__d['size'] is not None and self.__d['type'] == "FOLDER":
@@ -71,14 +80,11 @@ class SystemItemImportValidator:
 
     async def __validateDate(self) -> (bool, dict):
         try:
-            print(datetime.datetime.fromisoformat(self.__data['updateDate']))
+            datetime.datetime.fromisoformat(self.__data['updateDate'].replace('Z', '+00:00'))
+            return True, {}
         except:
-            print("NO")
-       # return {"code": 400, "message": f"Validation Failed!\nDate processed according to ISO 8601\nElement: {d}"} #  TODO: проверить ебучую дату
-        return True, {}
-
-    async def __validateDependencyTree(self) -> (bool, dict):
-        return True, {}
+            return {"code": 400,
+                    "message": f"Validation Failed!\nDate processed according to ISO 8601\nElement: {self.__d}"}
 
     async def check(self) -> dict:
         """Public method used to check the correctness of the structure of the transferred data,
@@ -99,8 +105,7 @@ class SystemItemImportValidator:
                 await self.__validateId(),
                 await self.__validateUrl(),
                 await self.__validateParentId(),
-                await self.__validateSize(),
-                await self.__validateDependencyTree()
+                await self.__validateSize()
             ]
 
             # -->  Check if all tests are passed  <-- #
