@@ -43,3 +43,4 @@ def run():  # Entry point to the application
     loop.run_until_complete(prepare_database())
     start_API()
 
+run()

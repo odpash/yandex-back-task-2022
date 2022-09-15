@@ -1,8 +1,8 @@
-FROM python:3
-
-RUN apt-get update && apt-get upgrade -y && apt-get autoremove && apt-get autoclean
-RUN mkdir /api
-COPY . /api/
-WORKDIR /api
-
-ENTRYPOINT ["python", "main.py"]
+FROM python:3.6
+RUN apt-get update
+RUN mkdir /driveApp
+WORKDIR /driveApp
+COPY . /driveApp
+RUN pip install -r requirements.txt
+ENV FLASK_ENV="docker"
+EXPOSE 80
