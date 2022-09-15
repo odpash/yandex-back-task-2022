@@ -211,9 +211,9 @@ def print_diff(expected, response):
 def test_import():
     for index, batch in enumerate(IMPORT_BATCHES):
         print(f"Importing batch {index}")
-        status, _ = request("/imports", method="POST", data=batch)
+        status, descr = request("/imports", method="POST", data=batch)
 
-        assert status == 200, f"Expected HTTP status code 200, got {status}"
+        assert status == 200, f"Expected HTTP status code 200, got {status} with descr:{descr}"
 
     print("Test import passed.")
 

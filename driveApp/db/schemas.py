@@ -16,24 +16,13 @@ date text NOT NULL,
 parentId text,
 type text, 
 size integer,
- children json
+ children text
 )"""
 # # # # # # # # # # # # # # # # #
 
 
 # Import handler Sql's
-GET_ID_AND_PARENT_SQL = f"""SELECT (id, parentid, type) FROM SystemItem"""
-UPDATE_BY_IDS_SQL = f"""update systemitem as t set -- postgres FTW
-  url = n.url,
-  parentId = n.parentId,
-  size = n.size_,
-  type = n.type_,
-  date = n.date_
-from (values
-  insert_array
-) as n(id, url, parentId, size_, type_, date_)
-where n.id = t.id;"""
-
-
-INSERT_NEW_ELEMENTS_SQL = f"""INSERT INTO SystemItem VALUES """
+GET_ID_AND_PARENT_SQL = f"""SELECT (id, parentid, type, children) FROM SystemItem"""
+INSERT_NEW_FILE_SQL = f"""INSERT INTO SystemItem (id, url, date, parentid, type, size, children) VALUES """
+INSERT_NEW_FOLDER_SQL = f"""INSERT INTO SystemItem (id, date, parentid, type, children) VALUES """
 # # # # # # # # # # # # # # # # #
