@@ -24,6 +24,10 @@ async def read_from_db(id):
     else:
         sizes = res['size']
         res['children'] = None
+    if res['url'] == 'null':
+        res['url'] = None
+    if res['parentid'] == 'null':
+        res['parentid'] = None
     return sizes, res
 
 
@@ -35,4 +39,4 @@ async def handler(id):
     if len(res) == 0:
         return Response(json.dumps({'code': 400, 'message': "Validation Failed!"}), 200, mimetype='application/json')
     _, res = await read_from_db(id)
-    return Response(json.dumps(res), 200, mimetype='application/json')
+    return Response(json.dumps(res).replace('parentid', "parentId"), 200, mimetype='application/json')

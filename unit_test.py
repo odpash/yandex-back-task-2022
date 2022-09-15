@@ -13,6 +13,7 @@ API_BASEURL = "http://localhost:8080"
 ROOT_ID = "069cb8d7-bbdd-47d3-ad8f-82ef4c269df1"
 
 IMPORT_BATCHES = [
+
     {
         "items": [
             {
@@ -23,6 +24,7 @@ IMPORT_BATCHES = [
         ],
         "updateDate": "2022-02-01T12:00:00Z"
     },
+
     {
         "items": [
             {
