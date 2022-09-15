@@ -1,5 +1,11 @@
 import sys
-import driveApp.app as DriveApplication
+import driveApp.app as yandex_drive_application
 
-sys.setrecursionlimit(50000)
-DriveApplication.main()
+
+def main():
+    sys.setrecursionlimit(50000)
+    yandex_drive_application.run()
+
+
+if __name__ == '__main__':
+    main()
